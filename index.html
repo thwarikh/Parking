@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking Finder</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .parking { border: 1px solid #ddd; padding: 10px; margin: 10px; }
+    </style>
+</head>
+<body>
+    <h2>Nearby Parking Areas</h2>
+    <div id="parking-list"></div>
+
+    <script>
+        function fetchParkingAreas() {
+            fetch('http://127.0.0.1:5000/parking')
+                .then(response => response.json())
+                .then(data => {
+                    const list = document.getElementById('parking-list');
+                    list.innerHTML = "";
+                    data.forEach(area => {
+                        list.innerHTML += `
+                            <div class="parking">
+                                <h3>${area.name}</h3>
+                                <p>Capacity: ${area.capacity}</p>
+                                <p>Available Slots: ${area.available_slots}</p>
+                            </div>`;
+                    });
+                });
+        }
+
+        fetchParkingAreas();
+    </script>
+</body>
+</html>
